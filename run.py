@@ -118,14 +118,15 @@ def main():
                                              max_length=run_args.max_length,
                                              cache_dir='cache',
                                              tokenizer=tokenizer)
-
+        print("train dataset is loaded")
         valid_dataset = IndexingTrainDataset(path_to_data=run_args.valid_file,
                                              max_length=run_args.max_length,
                                              cache_dir='cache',
                                              remove_prompt=run_args.remove_prompt,
                                              tokenizer=tokenizer)
+        print("valid dataset is loaded")
         ################################################################
-        # docid generation constrain, we only generate integer docids.
+        # docid generation constrain, we only generate integer docids.4
         SPIECE_UNDERLINE = "▁"
         INT_TOKEN_IDS = []
         for token, id in tokenizer.get_vocab().items():
@@ -137,11 +138,12 @@ def main():
             elif token.isdigit():
                 INT_TOKEN_IDS.append(id)
         INT_TOKEN_IDS.append(tokenizer.eos_token_id)
+        print("docid generation finished, we only generate integer docids.")
 
         def restrict_decode_vocab(batch_idx, prefix_beam):
             return INT_TOKEN_IDS
         ################################################################
-
+        print("start training.")
         trainer = DSITrainer(
             model=model,
             tokenizer=tokenizer,
