@@ -64,6 +64,7 @@ def make_compute_metrics(tokenizer, valid_ids):
 
 def main():
 
+    print("main started!")
     parser = HfArgumentParser((TrainingArguments, RunArguments))
     training_args, run_args = parser.parse_args_into_dataclasses()
 
@@ -73,6 +74,7 @@ def main():
         wandb.login()
         wandb.init(project="DSI", name=training_args.run_name)
 
+    print('wandb loging sucessfull')
     if 'mt5' in run_args.model_name:
         tokenizer = MT5Tokenizer.from_pretrained(run_args.model_name, cache_dir='cache')
         fast_tokenizer = MT5TokenizerFast.from_pretrained(run_args.model_name, cache_dir='cache')
@@ -193,5 +195,6 @@ def main():
 
 
 if __name__ == "__main__":
+    print("above main!")
     main()
 
